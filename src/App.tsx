@@ -41,12 +41,18 @@ import {
 import { motion, AnimatePresence } from 'motion/react';
 import { Property, TourBooking, Review } from './types';
 
+// Import local assets so Vite processes them during production build
+import heroImg from './assets/images/hero_mansion_1780555313002.png';
+import duplexImg from './assets/images/duplex_lekki_1780555328277.png';
+import penthouseImg from './assets/images/apartment_ikoyi_1780555341236.png';
+import terraceImg from './assets/images/terrace_ajah_1780555356676.png';
+
 // Concrete, photorealistic image URLs created via generate_image in the workspace
 const ASSET_IMAGES = {
-  hero: '/src/assets/images/hero_mansion_1780555313002.png',
-  duplex: '/src/assets/images/duplex_lekki_1780555328277.png',
-  penthouse: '/src/assets/images/apartment_ikoyi_1780555341236.png',
-  terrace: '/src/assets/images/terrace_ajah_1780555356676.png'
+  hero: heroImg,
+  duplex: duplexImg,
+  penthouse: penthouseImg,
+  terrace: terraceImg
 };
 
 // Seed premium luxury listings in Lagos, Nigeria
@@ -720,52 +726,119 @@ export default function App() {
         )}
       </AnimatePresence>
 
-      {/* 3. HERO SHOWCASE WITH ADVANCED OVERLAY SEARCH & FILTER DOCK */}
-      <section className="relative overflow-hidden w-full h-[640px] border-b border-white/5">
+      {/* 3. HERO SHOWCASE: WORLD-CLASS EDITORIAL SPLIT INTERFACE */}
+      <section className="relative overflow-hidden w-full bg-[#fbfbfa] dark:bg-[#0c0b0a] transition-colors duration-200 border-b border-stone-200/60 dark:border-white/5">
         
-        {/* Background visual banner with premium twilight tint */}
-        <div className="absolute inset-0 z-0">
-          <img
-            src={ASSET_IMAGES.hero}
-            alt="Adzan Luxury Mansion Lagos"
-            referrerPolicy="no-referrer"
-            className="w-full h-full object-cover brightness-[0.45] transition-transform duration-1000 scale-102"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0c0b0a] via-transparent to-stone-900/60" />
-        </div>
+        {/* Subtle decorative grid pattern background */}
+        <div className="absolute inset-0 opacity-[0.02] dark:opacity-[0.04] select-none pointer-events-none bg-[radial-gradient(#000_1px,transparent_1px)] [background-size:16px_16px]" />
 
-        <div className="relative z-10 mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 h-full flex flex-col justify-end">
-          
-          {/* Slogan and Brand Framing headings */}
-          <div className="max-w-3xl mb-12">
-            <span className="inline-flex items-center gap-2 rounded-full border border-gold-500/20 bg-gold-500/5 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-[#ECE9E4] mb-5">
-              <Sparkles className="h-4 w-4 text-gold-500" />
-              Corporate Registry RC. 6896512
-            </span>
-            <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-normal leading-none text-white tracking-tight">
-              Crafting <span className="font-serif italic text-gold-500">Uncompromising</span> Luxury In Lagos Real Estate
-            </h1>
-            <p className="mt-4 text-sm sm:text-base leading-relaxed text-[#D1CCC4]/90 max-w-2xl">
-              We engineer beautiful real estate portfolios that combine breathtaking aesthetic visuals, absolute legal clean records, and highly customized premium finishes under of tagline: <strong className="font-semibold text-white">Reliable and Affordable</strong>.
-            </p>
+        <div className="mx-auto max-w-7xl px-4 pt-12 pb-24 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+            
+            {/* COLUMN 1: EDITORIAL TYPOGRAPHY & TAGLINE (7 Cols) */}
+            <div className="lg:col-span-7 space-y-8 text-left">
+              
+              {/* Premium understated badge */}
+              <div className="inline-flex items-center gap-2 px-3 py-1 bg-emerald-500/5 dark:bg-emerald-500/10 border border-emerald-600/10 rounded-full text-[10px] font-semibold uppercase tracking-[0.15em] text-emerald-800 dark:text-emerald-400">
+                <Sparkles className="h-3.5 w-3.5 text-emerald-600 dark:text-gold-500" />
+                <span>Corporate Registry RC. 6896512</span>
+              </div>
+
+              {/* Masterful Display Title displaying luxury editorial aesthetics */}
+              <div className="space-y-4">
+                <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-light leading-[1.1] text-stone-900 dark:text-white tracking-tight">
+                  Homes of <span className="font-serif italic text-emerald-700 dark:text-gold-500 font-normal">rare elegance</span>,<br />
+                  crafted with absolute <span className="font-serif italic text-emerald-700 dark:text-gold-500 font-normal">diligence</span>.
+                </h1>
+                
+                {/* Clean, simple under-heading tagline containing required slogan "Reliable and Affordable" */}
+                <p className="text-stone-600 dark:text-[#A69F95] text-sm sm:text-base leading-relaxed max-w-xl">
+                  We engineer premium real estate portfolios in Lagos that stand as timeless architectural expressions. Complete with verified land titles, built under our unyielding commitment: <strong className="font-semibold text-emerald-800 dark:text-gold-500 uppercase tracking-wider text-xs">Reliable and Affordable</strong>.
+                </p>
+              </div>
+
+              {/* Clean, understated call-to-actions */}
+              <div className="flex flex-wrap items-center gap-4 pt-2">
+                <a
+                  href="#properties-hub"
+                  className="px-6 py-3.5 bg-stone-900 hover:bg-stone-800 text-white dark:bg-[#ece9e4] dark:hover:bg-[#fff] dark:text-stone-950 text-xs font-bold uppercase tracking-widest rounded-xl transition-all shadow-sm group inline-flex items-center gap-2"
+                >
+                  Explore Registry <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </a>
+                <a
+                  href="#contact-brokerage-dock"
+                  className="px-6 py-3.5 border border-stone-250 dark:border-white/10 hover:bg-stone-50 dark:hover:bg-stone-950 text-stone-700 dark:text-[#ECE9E4] text-xs font-bold uppercase tracking-widest rounded-xl transition-all"
+                >
+                  Request Proposal
+                </a>
+              </div>
+
+              {/* Minimal Trust Indicator inside hero */}
+              <div className="pt-6 border-t border-stone-200/70 dark:border-[#2C261A] max-w-md grid grid-cols-3 gap-6">
+                <div>
+                  <span className="block text-2xl font-serif text-stone-900 dark:text-white font-medium">₦4.2B+</span>
+                  <span className="block text-[9px] uppercase tracking-wider text-stone-400 dark:text-gray-550">Portfolio Closed</span>
+                </div>
+                <div>
+                  <span className="block text-2xl font-serif text-stone-900 dark:text-white font-medium">100%</span>
+                  <span className="block text-[9px] uppercase tracking-wider text-stone-400 dark:text-gray-550">Clean Land Title</span>
+                </div>
+                <div>
+                  <span className="block text-2xl font-serif text-stone-900 dark:text-white font-medium">RC</span>
+                  <span className="block text-[9px] uppercase tracking-wider text-stone-400 dark:text-gray-550">CAC Verified</span>
+                </div>
+              </div>
+
+            </div>
+
+            {/* COLUMN 2: THE PICTURE ART FRAME (5 Cols) */}
+            <div className="lg:col-span-5 relative">
+              <div className="relative mx-auto max-w-sm lg:max-w-none">
+                
+                {/* Thin, elegant architectural decoration ring */}
+                <div className="absolute -inset-4 border border-stone-200/50 dark:border-[#2C261A]/40 rounded-3xl -rotate-1 select-none pointer-events-none" />
+                
+                {/* The main asset picture container */}
+                <div className="relative overflow-hidden aspect-[4/5] rounded-2xl border border-stone-250 dark:border-[#2C261A] bg-stone-100 dark:bg-stone-950 shadow-xl group">
+                  <img
+                    src={ASSET_IMAGES.hero}
+                    alt="Adzan Luxury Mansion"
+                    referrerPolicy="no-referrer"
+                    className="w-full h-full object-cover brightness-[0.9] dark:brightness-[0.75] transition-transform duration-1000 scale-101 group-hover:scale-105"
+                  />
+                  
+                  {/* Subtle inner shadow overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60 pointer-events-none" />
+
+                  {/* Absolute framed badge at the bottom */}
+                  <div className="absolute bottom-5 inset-x-5 bg-white/94 dark:bg-stone-950/94 backdrop-blur-md border border-stone-200/50 dark:border-[#2C261A] rounded-xl p-4 text-left transition-colors duration-200">
+                    <span className="text-[9px] font-bold uppercase tracking-widest text-emerald-700 dark:text-gold-500 block mb-0.5">Signature Asset</span>
+                    <strong className="block font-serif text-sm text-stone-900 dark:text-white font-normal">Our Alausa-Approved Mansion Portfolio</strong>
+                    <span className="text-[9px] text-stone-500 dark:text-gray-400 block mt-1">Lekki Phase 1, Lagos</span>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
           </div>
 
-          {/* DYNAMIC SEARCH FILTER CAB DOCK */}
-          <div id="search-container-hud" className="w-full bg-[#fbfbfa]/98 dark:bg-[#13110E]/95 border border-stone-200 dark:border-[#2C261A] p-5 sm:p-7 rounded-2xl sm:rounded-3xl shadow-2xl backdrop-blur-md relative z-10 translate-y-6 transition-colors duration-200">
+          {/* DYNAMIC SEARCH FILTER CAB DOCK: SEAMLESS INTEGRATION BELOW HERO GRID */}
+          <div id="search-container-hud" className="w-full mt-16 bg-white dark:bg-[#13110E] border border-stone-200 dark:border-[#2C261A] p-5 sm:p-7 rounded-2xl shadow-xl transition-colors duration-200">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
               
               {/* Query location finder input */}
-              <div className="flex flex-col">
-                <label className="text-[10px] font-bold uppercase tracking-wider text-emerald-700 dark:text-gold-500 mb-2 flex items-center gap-1.5">
-                  <MapPin className="h-3.5 w-3.5 text-emerald-600 dark:text-gold-500" /> Location / Territory
+              <div className="flex flex-col text-left">
+                <label className="text-[10px] font-bold uppercase tracking-wider text-stone-500 dark:text-gray-400 mb-2 flex items-center gap-1.5">
+                  <MapPin className="h-3.5 w-3.5 text-emerald-600 dark:text-gold-500" /> Location / Region
                 </label>
                 <div className="relative">
                   <select
                     value={locationFilter}
                     onChange={(e) => setLocationFilter(e.target.value)}
-                    className="w-full rounded-xl bg-white dark:bg-stone-900 border border-stone-200 dark:border-[#2C261A] px-4 py-3 text-xs text-stone-900 dark:text-[#ECE9E4] outline-none focus:border-emerald-650 dark:focus:border-gold-500 cursor-pointer appearance-none"
+                    className="w-full rounded-xl bg-stone-50 dark:bg-stone-900 border border-stone-200 dark:border-[#2C261A] px-4 py-3 text-xs text-stone-900 dark:text-[#ECE9E4] outline-none focus:border-emerald-650 dark:focus:border-gold-500 cursor-pointer appearance-none"
                   >
-                    <option value="">All Lagos Regions</option>
+                    <option value="">All Regions</option>
                     {uniqueLocations.map(loc => (
                       <option key={loc} value={loc}>{loc}</option>
                     ))}
@@ -775,26 +848,26 @@ export default function App() {
               </div>
 
               {/* Keyword / Feature general input search */}
-              <div className="flex flex-col">
-                <label className="text-[10px] font-bold uppercase tracking-wider text-emerald-700 dark:text-gold-500 mb-2 flex items-center gap-1.5">
-                  <Search className="h-3.5 w-3.5 text-emerald-600 dark:text-gold-500" /> Search Spec / Ref
+              <div className="flex flex-col text-left">
+                <label className="text-[10px] font-bold uppercase tracking-wider text-stone-500 dark:text-gray-400 mb-2 flex items-center gap-1.5">
+                  <Search className="h-3.5 w-3.5 text-emerald-600 dark:text-gold-500" /> Find Specs & Features
                 </label>
                 <div className="relative">
                   <input
                     type="text"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    placeholder="e.g. Cinema, Private Pool, BQ..."
-                    className="w-full rounded-xl bg-white dark:bg-stone-900 border border-stone-200 dark:border-[#2C261A] px-4.5 py-3 text-xs text-stone-900 dark:text-[#ECE9E4] placeholder-stone-450 dark:placeholder-gray-550 outline-none focus:border-emerald-650 dark:focus:border-gold-500"
+                    placeholder="e.g. Cinema, Pool, BQ..."
+                    className="w-full rounded-xl bg-stone-50 dark:bg-stone-900 border border-stone-200 dark:border-[#2C261A] px-4.5 py-3 text-xs text-stone-900 dark:text-[#ECE9E4] placeholder-stone-450 dark:placeholder-gray-550 outline-none focus:border-emerald-650 dark:focus:border-gold-500"
                   />
                   <Search className="absolute right-4 top-3.5 h-4 w-4 text-stone-500 dark:text-gray-500 pointer-events-none" />
                 </div>
               </div>
 
               {/* Price Range Slider Container */}
-              <div className="flex flex-col lg:col-span-2">
+              <div className="flex flex-col lg:col-span-2 text-left">
                 <div className="flex items-center justify-between mb-2">
-                  <label className="text-[10px] font-bold uppercase tracking-wider text-emerald-700 dark:text-gold-500 flex items-center gap-1.5">
+                  <label className="text-[10px] font-bold uppercase tracking-wider text-stone-500 dark:text-gray-400 flex items-center gap-1.5">
                     <Sliders className="h-3.5 w-3.5 text-emerald-600 dark:text-gold-500" /> Maximum Investment Outlay
                   </label>
                   <span className="text-[11px] font-bold text-stone-900 dark:text-white font-mono">{formatNaira(priceRange)}</span>
@@ -808,7 +881,7 @@ export default function App() {
                     step={20000000}
                     value={priceRange}
                     onChange={(e) => setPriceRange(Number(e.target.value))}
-                    className="flex-1 h-1.5 bg-stone-200 dark:bg-stone-900 rounded-lg appearance-none cursor-pointer accent-emerald-600 dark:accent-gold-500"
+                    className="flex-1 h-1.5 bg-stone-200 dark:bg-stone-950 rounded-lg appearance-none cursor-pointer accent-emerald-600 dark:accent-gold-500 theme-slider"
                   />
                   <span className="text-[10px] text-stone-500 dark:text-gray-500">1.5B</span>
                 </div>
@@ -817,7 +890,7 @@ export default function App() {
             </div>
 
             {/* Micro details row below filter search */}
-            <div className="flex items-center justify-between mt-4/5 pt-4/5 border-t border-stone-200 dark:border-[#1C1A18] text-[9px] text-stone-500 dark:text-[#A69F95]">
+            <div className="flex items-center justify-between mt-5 pt-4 border-t border-stone-150 dark:border-[#1C1A18] text-[9px] text-stone-500 dark:text-[#A69F95]">
               <span>Matching Properties found: <strong className="text-stone-900 dark:text-white">{filteredProperties.length}</strong></span>
               { (searchQuery || locationFilter || priceRange < 1500000000) && (
                 <button
