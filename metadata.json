@@ -1,0 +1,6 @@
+{
+  "name": "Adzan Luxury Homes Limited",
+  "description": "A premium luxury real estate portfolio showcasing high-end properties in Lekki, Ikoyi, and VI, Lagos, Nigeria. Fully responsive with property search, advanced filtering, mortgage estimating, and booking integration.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
