@@ -55,6 +55,17 @@ const ASSET_IMAGES = {
   terrace: terraceImg
 };
 
+const HERO_SLIDES = [
+  heroImg,
+  duplexImg,
+  penthouseImg,
+  terraceImg,
+  'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=80',
+  'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1600&q=80',
+  'https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=1600&q=80',
+  'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1600&q=80'
+];
+
 // Seed premium luxury listings in Lagos, Nigeria
 const PROPERTY_DATA: Property[] = [
   {
@@ -216,6 +227,16 @@ export default function App() {
     }
     localStorage.setItem('adzan_dark_mode', darkMode.toString());
   }, [darkMode]);
+
+  // Hero section slideshow background images
+  const [currentHeroSlide, setCurrentHeroSlide] = useState(0);
+
+  useEffect(() => {
+    const slideInterval = setInterval(() => {
+      setCurrentHeroSlide((prev) => (prev + 1) % HERO_SLIDES.length);
+    }, 6000); // Change image every 6 seconds
+    return () => clearInterval(slideInterval);
+  }, []);
 
   // Navigation & UI States
   const [activeTab, setActiveTab] = useState<'all' | 'duplex' | 'penthouse' | 'terrace' | 'apartment' | 'land'>('all');
@@ -726,55 +747,113 @@ export default function App() {
         )}
       </AnimatePresence>
 
-      {/* 3. HERO SHOWCASE: WORLD-CLASS EDITORIAL SPLIT INTERFACE */}
-      <section className="relative overflow-hidden w-full bg-[#fbfbfa] dark:bg-[#0c0b0a] transition-colors duration-200 border-b border-stone-200/60 dark:border-white/5">
+      {/* 3. HERO SHOWCASE: WORLD-CLASS EDITORIAL SPLIT INTERFACE WITH AMBIENT BACKGROUND */}
+      <section className="relative overflow-hidden w-full transition-colors duration-200 border-b border-stone-200/60 dark:border-white/5 min-h-[640px] flex items-center">
         
-        {/* Subtle decorative grid pattern background */}
-        <div className="absolute inset-0 opacity-[0.02] dark:opacity-[0.04] select-none pointer-events-none bg-[radial-gradient(#000_1px,transparent_1px)] [background-size:16px_16px]" />
+        {/* Cinematic Backdrop: Beautiful Fading Slideshow of Custom Homes and Lands */}
+        <div className="absolute inset-0 z-0 select-none pointer-events-none overflow-hidden">
+          <AnimatePresence mode="popLayout">
+            <motion.img
+              key={currentHeroSlide}
+              src={HERO_SLIDES[currentHeroSlide]}
+              alt="Adzan Luxury Estates and Lands background"
+              referrerPolicy="no-referrer"
+              initial={{ opacity: 0, scale: 1.03 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.98 }}
+              transition={{ duration: 1.2, ease: "easeInOut" }}
+              className="absolute inset-0 w-full h-full object-cover brightness-[0.93] dark:brightness-[0.38] contrast-[1.02]"
+            />
+          </AnimatePresence>
+          
+          {/* Soft, beautiful dynamic vignette overlay for pristine typography contrast and theme compliance */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#fbfbfa] via-[#fbfbfa]/95 to-[#fbfbfa]/45 dark:from-[#0c0b0a] dark:via-[#0c0b0a]/95 dark:to-[#0c0b0a]/45 transition-colors duration-200" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_right_top,transparent_30%,#fbfbfa_90%)] dark:bg-[radial-gradient(circle_at_right_top,transparent_30%,#0c0b0a_90%)] transition-colors duration-200" />
+        </div>
 
-        <div className="mx-auto max-w-7xl px-4 pt-12 pb-24 sm:px-6 lg:px-8">
+        {/* Subtle decorative grid pattern background overlayed */}
+        <div className="absolute inset-0 opacity-[0.01] dark:opacity-[0.03] select-none pointer-events-none bg-[radial-gradient(#000_1px,transparent_1px)] [background-size:16px_16px] z-1" />
+
+        <div className="relative z-10 mx-auto max-w-7xl px-4 pt-16 pb-24 sm:px-6 lg:px-8 w-full">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
             
             {/* COLUMN 1: EDITORIAL TYPOGRAPHY & TAGLINE (7 Cols) */}
-            <div className="lg:col-span-7 space-y-8 text-left">
+            <motion.div 
+              className="lg:col-span-7 space-y-8 text-left"
+              initial="hidden"
+              animate="visible"
+              variants={{
+                hidden: { opacity: 0 },
+                visible: {
+                  opacity: 1,
+                  transition: {
+                    staggerChildren: 0.12
+                  }
+                }
+              }}
+            >
               
               {/* Premium understated badge */}
-              <div className="inline-flex items-center gap-2 px-3 py-1 bg-emerald-500/5 dark:bg-emerald-500/10 border border-emerald-600/10 rounded-full text-[10px] font-semibold uppercase tracking-[0.15em] text-emerald-800 dark:text-emerald-400">
+              <motion.div 
+                className="inline-flex items-center gap-2 px-3 py-1 bg-emerald-500/5 dark:bg-emerald-500/10 border border-emerald-600/10 rounded-full text-[10px] font-semibold uppercase tracking-[0.15em] text-emerald-800 dark:text-emerald-400 backdrop-blur-sm"
+                variants={{
+                  hidden: { opacity: 0, y: 15 },
+                  visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 100 } }
+                }}
+              >
                 <Sparkles className="h-3.5 w-3.5 text-emerald-600 dark:text-gold-500" />
                 <span>Corporate Registry RC. 6896512</span>
-              </div>
+              </motion.div>
 
               {/* Masterful Display Title displaying luxury editorial aesthetics */}
-              <div className="space-y-4">
+              <motion.div 
+                className="space-y-4"
+                variants={{
+                  hidden: { opacity: 0, y: 20 },
+                  visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 80, damping: 15 } }
+                }}
+              >
                 <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-light leading-[1.1] text-stone-900 dark:text-white tracking-tight">
                   Homes of <span className="font-serif italic text-emerald-700 dark:text-gold-500 font-normal">rare elegance</span>,<br />
                   crafted with absolute <span className="font-serif italic text-emerald-700 dark:text-gold-500 font-normal">diligence</span>.
                 </h1>
                 
                 {/* Clean, simple under-heading tagline containing required slogan "Reliable and Affordable" */}
-                <p className="text-stone-600 dark:text-[#A69F95] text-sm sm:text-base leading-relaxed max-w-xl">
+                <p className="text-stone-605 dark:text-[#A69F95] text-sm sm:text-base leading-relaxed max-w-xl">
                   We engineer premium real estate portfolios in Lagos that stand as timeless architectural expressions. Complete with verified land titles, built under our unyielding commitment: <strong className="font-semibold text-emerald-800 dark:text-gold-500 uppercase tracking-wider text-xs">Reliable and Affordable</strong>.
                 </p>
-              </div>
+              </motion.div>
 
               {/* Clean, understated call-to-actions */}
-              <div className="flex flex-wrap items-center gap-4 pt-2">
+              <motion.div 
+                className="flex flex-wrap items-center gap-4 pt-2"
+                variants={{
+                  hidden: { opacity: 0, y: 15 },
+                  visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 90, damping: 14 } }
+                }}
+              >
                 <a
                   href="#properties-hub"
-                  className="px-6 py-3.5 bg-stone-900 hover:bg-stone-800 text-white dark:bg-[#ece9e4] dark:hover:bg-[#fff] dark:text-stone-950 text-xs font-bold uppercase tracking-widest rounded-xl transition-all shadow-sm group inline-flex items-center gap-2"
+                  className="px-6 py-3.5 bg-stone-900 hover:bg-stone-800 text-white dark:bg-[#ece9e4] dark:hover:bg-[#fff] dark:text-stone-950 text-xs font-bold uppercase tracking-widest rounded-xl transition-all shadow-md group inline-flex items-center gap-2"
                 >
                   Explore Registry <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </a>
                 <a
                   href="#contact-brokerage-dock"
-                  className="px-6 py-3.5 border border-stone-250 dark:border-white/10 hover:bg-stone-50 dark:hover:bg-stone-950 text-stone-700 dark:text-[#ECE9E4] text-xs font-bold uppercase tracking-widest rounded-xl transition-all"
+                  className="px-6 py-3.5 border border-stone-250 dark:border-white/10 hover:bg-stone-50 dark:hover:bg-[#13110e]/40 text-stone-700 dark:text-[#ECE9E4] text-xs font-bold uppercase tracking-widest rounded-xl transition-all backdrop-blur-xs"
                 >
                   Request Proposal
                 </a>
-              </div>
+              </motion.div>
 
               {/* Minimal Trust Indicator inside hero */}
-              <div className="pt-6 border-t border-stone-200/70 dark:border-[#2C261A] max-w-md grid grid-cols-3 gap-6">
+              <motion.div 
+                className="pt-6 border-t border-stone-200/70 dark:border-[#2C261A]/50 max-w-md grid grid-cols-3 gap-6"
+                variants={{
+                  hidden: { opacity: 0, y: 15 },
+                  visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 80, damping: 16 } }
+                }}
+              >
                 <div>
                   <span className="block text-2xl font-serif text-stone-900 dark:text-white font-medium">₦4.2B+</span>
                   <span className="block text-[9px] uppercase tracking-wider text-stone-400 dark:text-gray-550">Portfolio Closed</span>
@@ -787,12 +866,17 @@ export default function App() {
                   <span className="block text-2xl font-serif text-stone-900 dark:text-white font-medium">RC</span>
                   <span className="block text-[9px] uppercase tracking-wider text-stone-400 dark:text-gray-550">CAC Verified</span>
                 </div>
-              </div>
+              </motion.div>
 
-            </div>
+            </motion.div>
 
             {/* COLUMN 2: THE PICTURE ART FRAME (5 Cols) */}
-            <div className="lg:col-span-5 relative">
+            <motion.div 
+              className="lg:col-span-5 relative"
+              initial={{ opacity: 0, scale: 0.96, y: 25 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              transition={{ type: "spring", stiffness: 50, damping: 16, delay: 0.25 }}
+            >
               <div className="relative mx-auto max-w-sm lg:max-w-none">
                 
                 {/* Thin, elegant architectural decoration ring */}
@@ -819,12 +903,43 @@ export default function App() {
                 </div>
 
               </div>
-            </div>
+            </motion.div>
 
           </div>
 
+          {/* Subtle premium horizontal indicators of the changing backdrop images */}
+          <div className="flex flex-col items-center justify-center gap-2.5 mt-10 pointer-events-auto relative z-20">
+            <div className="flex items-center gap-2">
+              {HERO_SLIDES.map((_, idx) => (
+                <button
+                  key={idx}
+                  type="button"
+                  onClick={() => setCurrentHeroSlide(idx)}
+                  className={`h-2 rounded-full transition-all duration-300 ${
+                    currentHeroSlide === idx
+                      ? 'w-7 bg-emerald-700 dark:bg-gold-500 shadow-sm'
+                      : 'w-2 bg-stone-400/40 dark:bg-stone-750/90 hover:bg-stone-550 dark:hover:bg-stone-600'
+                  }`}
+                  aria-label={`Go to slide ${idx + 1}`}
+                />
+              ))}
+            </div>
+            <span className="text-[10px] font-mono tracking-widest text-stone-500 dark:text-[#A69F95] uppercase bg-stone-100/60 dark:bg-[#13110E]/40 backdrop-blur-md px-3 py-1 rounded-full border border-stone-200/50 dark:border-[#2C261A]/50 transition-all">
+              Slide Showcase {currentHeroSlide + 1}: {
+                currentHeroSlide === 0 ? "Signature Adzan Mansion Portfolio" :
+                currentHeroSlide === 1 ? "The Horizon Smart Duplex (Lekki Phase 1)" :
+                currentHeroSlide === 2 ? "The Riviera Oceanfront Penthouse (Banana Island)" :
+                currentHeroSlide === 3 ? "The Grand Orchard Terrace (Ajah Luxury)" :
+                currentHeroSlide === 4 ? "Modernist Custom Mansion (Architectural Sunset)" :
+                currentHeroSlide === 5 ? "Mediterranean Oasis Infinity Villa" :
+                currentHeroSlide === 6 ? "Contemporary Glass & Concrete Landmark" :
+                "Palatial Landscaped Tropical Estate Gardens"
+              }
+            </span>
+          </div>
+
           {/* DYNAMIC SEARCH FILTER CAB DOCK: SEAMLESS INTEGRATION BELOW HERO GRID */}
-          <div id="search-container-hud" className="w-full mt-16 bg-white dark:bg-[#13110E] border border-stone-200 dark:border-[#2C261A] p-5 sm:p-7 rounded-2xl shadow-xl transition-colors duration-200">
+          <div id="search-container-hud" className="w-full mt-16 bg-white/90 dark:bg-[#13110E]/90 backdrop-blur-md border border-stone-200 dark:border-[#2C261A] p-5 sm:p-7 rounded-2xl shadow-xl transition-colors duration-200">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
               
               {/* Query location finder input */}
@@ -960,18 +1075,35 @@ export default function App() {
             </button>
           </div>
         ) : (
-          
-          /* Visual Bento-inspired card grid */
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <motion.div 
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={{
+              hidden: { opacity: 0 },
+              visible: {
+                opacity: 1,
+                transition: {
+                  staggerChildren: 0.08
+                }
+              }
+            }}
+          >
             {filteredProperties.map((prop) => {
               const itemWishlisted = wishlist.includes(prop.id);
               
               return (
-                <div
+                <motion.div
                   id={`prop-card-${prop.id}`}
                   key={prop.id}
                   onClick={() => setSelectedProperty(prop)}
-                  className="group cursor-pointer flex flex-col justify-between h-full bg-white dark:bg-[#13110E] border border-stone-200 dark:border-[#2C261A] hover:border-emerald-600/35 dark:hover:border-gold-500/30 rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+                  variants={{
+                    hidden: { opacity: 0, y: 30 },
+                    visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 80, damping: 14 } }
+                  }}
+                  whileHover={{ y: -8, transition: { duration: 0.2 } }}
+                  className="group cursor-pointer flex flex-col justify-between h-full bg-white dark:bg-[#13110E] border border-stone-200 dark:border-[#2C261A] hover:border-emerald-600/35 dark:hover:border-gold-500/30 rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300"
                 >
                   
                   {/* Media Wrapper */}
@@ -1088,10 +1220,10 @@ export default function App() {
 
                   </div>
 
-                </div>
+                </motion.div>
               );
             })}
-          </div>
+          </motion.div>
         )}
 
       </section>
@@ -1276,9 +1408,30 @@ export default function App() {
           <p className="text-xs text-stone-500 dark:text-[#A69F95] leading-relaxed mt-2">Integrating legal diligence under registry code RC 6896512 with visual architecture mastery in Lekki and Ikoyi.</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <motion.div 
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          variants={{
+            hidden: { opacity: 0 },
+            visible: {
+              opacity: 1,
+              transition: {
+                staggerChildren: 0.1
+              }
+            }
+          }}
+        >
           
-          <div className="p-6 rounded-2xl bg-white dark:bg-[#13110E] border border-stone-200 dark:border-[#2C261A] text-left shadow-md transition-colors duration-200">
+          <motion.div 
+            variants={{
+              hidden: { opacity: 0, y: 30 },
+              visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 80, damping: 14 } }
+            }}
+            whileHover={{ y: -6, scale: 1.01, transition: { duration: 0.2 } }}
+            className="p-6 rounded-2xl bg-white dark:bg-[#13110E] border border-stone-200 dark:border-[#2C261A] text-left shadow-md transition-all duration-200 cursor-default hover:shadow-lg"
+          >
             <div className="p-3 w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 mb-5 flex items-center justify-center">
               <ShieldCheck className="h-6 w-6" />
             </div>
@@ -1286,9 +1439,16 @@ export default function App() {
             <p className="text-xs text-stone-500 dark:text-[#A69F95] leading-relaxed">
               We operate strictly verified by regulatory offices. Our company certification under entry registration RC: 6896512 protects your title interests effortlessly.
             </p>
-          </div>
+          </motion.div>
 
-          <div className="p-6 rounded-2xl bg-white dark:bg-[#13110E] border border-stone-200 dark:border-[#2C261A] text-left shadow-md transition-colors duration-200">
+          <motion.div 
+            variants={{
+              hidden: { opacity: 0, y: 30 },
+              visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 80, damping: 14 } }
+            }}
+            whileHover={{ y: -6, scale: 1.01, transition: { duration: 0.2 } }}
+            className="p-6 rounded-2xl bg-white dark:bg-[#13110E] border border-stone-200 dark:border-[#2C261A] text-left shadow-md transition-all duration-200 cursor-default hover:shadow-lg"
+          >
             <div className="p-3 w-12 h-12 rounded-xl bg-gold-400/10 text-emerald-600 dark:text-gold-500 mb-5 flex items-center justify-center">
               <Award className="h-6 w-6" />
             </div>
@@ -1296,9 +1456,16 @@ export default function App() {
             <p className="text-xs text-stone-500 dark:text-[#A69F95] leading-relaxed">
               Grade-A specifications. We coordinate fine bespoke timber profiles, anti-glare double panel glazing, water osmosis systems, and fully active home controls.
             </p>
-          </div>
+          </motion.div>
 
-          <div className="p-6 rounded-2xl bg-white dark:bg-[#13110E] border border-stone-200 dark:border-[#2C261A] text-left shadow-md transition-colors duration-200">
+          <motion.div 
+            variants={{
+              hidden: { opacity: 0, y: 30 },
+              visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 80, damping: 14 } }
+            }}
+            whileHover={{ y: -6, scale: 1.01, transition: { duration: 0.2 } }}
+            className="p-6 rounded-2xl bg-white dark:bg-[#13110E] border border-stone-200 dark:border-[#2C261A] text-left shadow-md transition-all duration-200 cursor-default hover:shadow-lg"
+          >
             <div className="p-3 w-12 h-12 rounded-xl bg-blue-500/10 text-blue-600 dark:text-blue-400 mb-5 flex items-center justify-center">
               <TrendingUp className="h-6 w-6" />
             </div>
@@ -1306,9 +1473,16 @@ export default function App() {
             <p className="text-xs text-stone-500 dark:text-[#A69F95] leading-relaxed">
               Optimized portfolios. By managing construction supply lines directly, we deliver real estate assets up to 20% lower than competing realities without reducing material grade.
             </p>
-          </div>
+          </motion.div>
 
-          <div className="p-6 rounded-2xl bg-white dark:bg-[#13110E] border border-stone-200 dark:border-[#2C261A] text-left shadow-md transition-colors duration-200">
+          <motion.div 
+            variants={{
+              hidden: { opacity: 0, y: 30 },
+              visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 80, damping: 14 } }
+            }}
+            whileHover={{ y: -6, scale: 1.01, transition: { duration: 0.2 } }}
+            className="p-6 rounded-2xl bg-white dark:bg-[#13110E] border border-stone-200 dark:border-[#2C261A] text-left shadow-md transition-all duration-200 cursor-default hover:shadow-lg"
+          >
             <div className="p-3 w-12 h-12 rounded-xl bg-purple-500/10 text-purple-600 dark:text-purple-400 mb-5 flex items-center justify-center">
               <Activity className="h-6 w-6" />
             </div>
@@ -1316,9 +1490,9 @@ export default function App() {
             <p className="text-xs text-stone-500 dark:text-[#A69F95] leading-relaxed">
               Complete support from documentation registers to post-purchase asset management. Dedicated client concierge brokers available 24/7.
             </p>
-          </div>
+          </motion.div>
 
-        </div>
+        </motion.div>
 
       </section>
 
